@@ -1,0 +1,144 @@
+:root {
+  /* Raw tokens */
+  --ink-light: oklch(22% 0.02 260);
+  --ink-dark: oklch(94% 0.01 260);
+  --muted-light: oklch(45% 0.02 260);
+  --muted-dark: oklch(72% 0.02 260);
+  --surface-light: oklch(99% 0.005 260);
+  --surface-dark: oklch(18% 0.015 260);
+  --card-light: oklch(96% 0.01 260);
+  --card-dark: oklch(23% 0.02 260);
+  --brand-light: oklch(50% 0.2 275);
+  --brand-dark: oklch(78% 0.14 275);
+  --ok-light: oklch(48% 0.14 150);
+  --ok-dark: oklch(78% 0.15 150);
+  --bad-light: oklch(50% 0.19 25);
+  --bad-dark: oklch(75% 0.15 25);
+
+  /* Semantic tokens (fallback for browsers without light-dark()) */
+  --ink: var(--ink-light);
+  --muted: var(--muted-light);
+  --surface: var(--surface-light);
+  --card: var(--card-light);
+  --brand: var(--brand-light);
+  --ok: var(--ok-light);
+  --bad: var(--bad-light);
+
+  @media (prefers-color-scheme: dark) {
+    --ink: var(--ink-dark);
+    --muted: var(--muted-dark);
+    --surface: var(--surface-dark);
+    --card: var(--card-dark);
+    --brand: var(--brand-dark);
+    --ok: var(--ok-dark);
+    --bad: var(--bad-dark);
+  }
+
+  @supports (color: light-dark(white, black)) {
+    --ink: light-dark(var(--ink-light), var(--ink-dark));
+    --muted: light-dark(var(--muted-light), var(--muted-dark));
+    --surface: light-dark(var(--surface-light), var(--surface-dark));
+    --card: light-dark(var(--card-light), var(--card-dark));
+    --brand: light-dark(var(--brand-light), var(--brand-dark));
+    --ok: light-dark(var(--ok-light), var(--ok-dark));
+    --bad: light-dark(var(--bad-light), var(--bad-dark));
+  }
+
+  color-scheme: light dark;
+  accent-color: var(--brand);
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--surface);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.shell {
+  max-width: 64rem;
+  margin-inline: auto;
+  padding: 3rem 1rem;
+}
+
+.eyebrow {
+  color: var(--brand);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.1;
+  margin: 0.25rem 0 0.75rem;
+}
+
+.lede {
+  color: var(--muted);
+  max-width: 42rem;
+  font-size: 1.125rem;
+  margin: 0;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 999px;
+  background: var(--card);
+  font-size: 0.9rem;
+}
+
+.status::before {
+  content: '';
+  inline-size: 0.6rem;
+  block-size: 0.6rem;
+  border-radius: 50%;
+  background: var(--muted);
+}
+
+.status[data-state='ok']::before {
+  background: var(--ok);
+}
+
+.status[data-state='error']::before {
+  background: var(--bad);
+}
+
+.roles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: 1rem;
+  padding: 0;
+  margin: 2.5rem 0 0;
+  list-style: none;
+}
+
+.role {
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  background: var(--card);
+}
+
+.role h2 {
+  font-size: 1.05rem;
+  margin: 0 0 0.25rem;
+}
+
+.role p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
