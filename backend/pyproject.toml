@@ -1,0 +1,45 @@
+[project]
+name = "agentoffice-api"
+version = "0.0.1"
+description = "AgentOffice API: an office of AI agents that collaborate across LLM providers."
+license = "AGPL-3.0-only"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.6",
+    "cryptography>=43",
+    "pyyaml>=6",
+    "llm-gateway",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "pytest-asyncio>=0.24",
+    "httpx>=0.27",
+    "ruff>=0.8",
+]
+
+[tool.uv.sources]
+llm-gateway = { workspace = true }
+
+[tool.uv.workspace]
+members = ["packages/*"]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests", "packages/llm_gateway/tests"]
+# Python skips .pth files flagged hidden by macOS (e.g. iCloud Desktop sync), so set the path explicitly.
+pythonpath = [".", "packages/llm_gateway/src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
